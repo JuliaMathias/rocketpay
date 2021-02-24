@@ -1,5 +1,5 @@
 defmodule Rocketpay.Users.Create do
-  @doc """
+  @moduledoc """
   Let's create some users!
   """
 
