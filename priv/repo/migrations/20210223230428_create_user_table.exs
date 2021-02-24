@@ -1,4 +1,7 @@
 defmodule Rocketpay.Repo.Migrations.CreateUserTable do
+  @moduledoc """
+  Creates User Table
+  """
   use Ecto.Migration
 
   def change do
