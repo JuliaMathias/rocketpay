@@ -1,7 +1,7 @@
 defmodule RocketpayWeb.ErrorView do
   use RocketpayWeb, :view
 
-  import Ecto.Changeset, only: [traverse_erros: 2]
+  import Ecto.Changeset, only: [traverse_errors: 2]
 
   alias Ecto.Changeset
 
