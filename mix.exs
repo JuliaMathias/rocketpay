@@ -1,8 +1,4 @@
 defmodule Rocketpay.MixProject do
-  @moduledoc """
-  The libs live here
-  """
-
   use Mix.Project
 
   def project do
@@ -14,7 +10,17 @@ defmodule Rocketpay.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test,
+        cover: :test,
+        "generate.cover": :test
+      ],
     ]
   end
 
@@ -37,19 +43,20 @@ defmodule Rocketpay.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.7"},
+      {:phoenix, "~> 1.5.6"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_dashboard, "~> 0.4"},
+      {:phoenix_live_dashboard, "~> 0.3 or ~> 0.2.9"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
-      {:bcrypt_elixir, "~> 2.0"},
-      {:decimal, "~> 2.0"}
+      {:pbkdf2_elixir, "~> 1.3"},
+      {:decimal, "~> 2.0"},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 
@@ -64,7 +71,9 @@ defmodule Rocketpay.MixProject do
       setup: ["deps.get", "ecto.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      cover: ["test --cover"],
+      "generate.cover": ["coveralls.html"]
     ]
   end
 end
